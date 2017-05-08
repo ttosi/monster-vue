@@ -1,30 +1,67 @@
 new Vue({
-    el: '#exercise',
+    el: '#app',
     data: {
-        hasEffect: false,
-        userClass: '',
-        useUserClass: false,
-        userStyle: 'red',
-        iveClass: 'ive',
-        gotClass: 'got',
-        classClass: 'class',
-        progressWidth: 0
+        playerHp: 100,
+        monsterHp: 100,
+        isGameInProgress: false,
+        attackLog: []
+    },
+    computed: {
+        playerHealth() {
+            if (this.playerHp <= 0) {
+                return 0;
+            }
+            return this.playerHp;
+        },
+        monsterHealth() {
+            if (this.monsterHp <= 0) {
+                return 0;
+            }
+            return this.monsterHp;
+        }
     },
     methods: {
-        startEffect() {
-            this.hasEffect = true; // start the effect change immediately
-            setInterval(() => {
-                this.hasEffect = !this.hasEffect
-            }, 750);
+        startGame() {
+            this.playerHp = 100;
+            this.monsterHp = 100;
+            this.isGameInProgress = true;
         },
-        startProgress: function () {
-            this.progressWidth = 0;
-            let progressInterval = setInterval(()=> {
-                this.progressWidth += .25;
-                if(this.progressWidth === 100) {
-                    clearInterval(progressInterval);
-                }
-            }, 8);
+        attack() {
+            this.playerHp -= Math.floor((Math.random() * 10) + 1);
+            this.monsterHp -= Math.floor((Math.random() * 10) + 1);
+            this.checkForWin();
         },
+        specialAttack() {
+            this.playerHp -= Math.floor((Math.random() * 10) + 1);
+            this.monsterHp -= Math.floor((Math.random() * 20) + 3);
+            this.checkForWin();
+        },
+        heal() {
+            this.playerHp += Math.floor((Math.random() * 8) + 1);
+            this.playerHp -= Math.floor((Math.random() * 10) + 2);
+            this.checkForWin()
+        },
+        adjustHp(player, amount) {
+            player += amount;
+        },
+        checkForWin() {
+            let message = '';
+
+            if (this.playerHp <= 0) {
+                message = 'Sorry, you lost!';
+            } else if (this.monsterHp <= 0) {
+                message = 'BAM! You won!';
+            }
+
+            if (message) {
+                this.isGameInProgress = false;
+                setTimeout(() => {
+                    alert(message);
+                }, 500)
+            }
+        },
+        appendLog(damage, player) {
+            this.push()
+        }
     }
 });

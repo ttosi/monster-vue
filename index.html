@@ -2,52 +2,66 @@
 <html>
 
 <head>
-    <title>Quadlog</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Monster Slayer</title>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <div id="exercise">
-        <!-- 1) Start the Effect with the Button. The Effect should alternate
-        the "highlight" or "shrink" class on each new setInterval tick (attach
-        respective class to the div with id "effect" below) -->
-        <div>
-            <button @click="startEffect">Start Effect</button>
-            <div id="effect" :class="{ highlight: hasEffect }"></div>
-        </div>
-        <!-- 2) Create a couple of CSS classes and attach them via the array syntax -->
-        <div :class="[iveClass, gotClass, classClass]">I've got class! :D</div>
-        <!-- 3) Let the user enter a class (create some example classes) and attach it -->
-        <div>
-            <input type="text" placeholder="chill, epic or down" v-model="userClass" />
-            <div :class="userClass" ></div>
-        </div>
-        <!-- 4) Let the user enter a class and enter true/false for another class
-        (create some example classes) and attach the classes -->
-        <div>
-            <input type="text" placeholder="chill, epic or down" v-model="userClass" />
-            <input type="text" placeholder="true or false" v-model="useUserClass" />
-            <div :class="[{ dim: useUserClass }, userClass]" ></div>
-        </div>
-        <!-- 5) Repeat 3) but now with values for styles (instead of class names). 
-        Attach the respective styles.  -->
-        <div>
-            <input type="text" placeholder="enter color of div" v-model="userStyle" />
-            <div class="userStyleDiv" :style="{ 'background-color': userStyle }"></div>
-        </div>
-        <!-- 6) Create a simple progress bar with setInterval and style bindings. 
-        Start it by hitting the below button. -->
-        <div>
-            <button v-on:click="startProgress">Start Progress</button>
-            <div id="progressContainer">
-                <div id="progressBar" 
-                    :class="{ progressComplete: progressWidth === 100 }"
-                    :style="{ width: progressWidth + '%' }">
+    <div id="app">
+        <section class="row">
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div 
+                        class="healthbar text-center" 
+                        style="background-color: green; margin: 0; color: white;"
+                        :style="{ width: playerHealth + '%' }">
+                        <div style="padding-top: 9px;">
+                            {{ playerHealth }}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <div 
+                        class="healthbar text-center"
+                        style="background-color: green; margin: 0; color: white;"
+                        :style="{ width:  monsterHealth + '%' }">
+                        <div style="padding-top: 9px;">
+                            {{ monsterHealth }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row controls" v-if="!isGameInProgress">
+            <div class="small-12 columns">
+                <button id="start-game" @click="startGame">START NEW GAME</button>
+            </div>
+        </section>
+        <section class="row controls" v-else>
+            <div class="small-12 columns">
+                <button id="attack" @click="attack">ATTACK</button>
+                <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
+                <button id="heal" @click="heal">HEAL</button>
+                <button id="give-up">GIVE UP</button>
+            </div>
+        </section>
+        <section class="row log" v-if="attackLog.length > 0">
+            <div class="small-12 columns">
+                <ul>
+                    <li>
 
-    <script src="https://unpkg.com/vue@2.3.2"></script>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+     <script src="https://unpkg.com/vue@2.3.2"></script>
     <script src="app.js"></script>
 </body>
+
+</html>
