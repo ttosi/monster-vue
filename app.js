@@ -1,30 +1,19 @@
 new Vue({
     el: '#exercise',
     data: {
-        hasEffect: false,
-        userClass: '',
-        useUserClass: false,
-        userStyle: 'red',
-        iveClass: 'ive',
-        gotClass: 'got',
-        classClass: 'class',
-        progressWidth: 0
-    },
-    methods: {
-        startEffect() {
-            this.hasEffect = true; // start the effect change immediately
-            setInterval(() => {
-                this.hasEffect = !this.hasEffect
-            }, 750);
+        show: true,
+        array: [
+            'Max', 'Anna', 'Chris', 'Manu'
+        ],
+        myObject: {
+            title: 'Lord of the Rings',
+            author: 'J.R.R. Tolkiens',
+            books: '3'
         },
-        startProgress: function () {
-            this.progressWidth = 0;
-            let progressInterval = setInterval(()=> {
-                this.progressWidth += .25;
-                if(this.progressWidth === 100) {
-                    clearInterval(progressInterval);
-                }
-            }, 8);
-        },
+        testData: {
+            name: 'TESTOBJECT',
+            id: 10,
+            data: [1.67, 1.33, 0.98, 2.21]
+        }
     }
 });
