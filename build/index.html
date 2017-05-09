@@ -25,7 +25,7 @@
                     :disabled="theHuman().heals === 0">
                         HEAL ({{ theHuman().heals }})
                 </button>
-                <button id="give-up">GIVE UP</button>
+                <button id="give-up" @click="giveUp">GIVE UP</button>
             </div>
         </section>
         <section class="row">

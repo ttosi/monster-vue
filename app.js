@@ -4,10 +4,6 @@ import Weapon from './weapon';
 new Vue({
     el: '#app',
     data: {
-        playerHp: 100,
-        monsterHp: 100,
-        maxSpecialAttacks: 3,
-        maxHeals: 2,
         isGameInProgress: false,
         attackLog: [],
         players: []
@@ -46,6 +42,7 @@ new Vue({
         specialAttack() {
             this.mutateHealth(this.theHuman(), 2, 15, false);
             this.mutateHealth(this.theMonster(), 5, 20, false);
+
             this
                 .theHuman()
                 .specialAttacks--;
@@ -53,6 +50,7 @@ new Vue({
         heal() {
             this.mutateHealth(this.theHuman(), 10, 30, true); // heal human
             this.mutateHealth(this.theHuman(), 3, 15, false); // take damage
+
             this
                 .theHuman()
                 .heals--;
@@ -66,6 +64,10 @@ new Vue({
         },
         appendLog(damage, player) {
             this.push(``)
+        },
+        giveUp() {
+            alert('Are you kidding me?. Pftt, finish your fight.');
+            this.mutateHealth(this.theHuman(), 3, 25, false);
         }
     },
     watch: {
