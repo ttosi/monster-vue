@@ -1,19 +1,6 @@
 import Character from './character';
 import Weapon from './weapon';
 
-const players = [
-    new Character({
-        name: 'ME',
-        health: 100,
-        isHuman: true,
-        weapons: [
-            new Weapon({name: 'First Finger'}),
-            new Weapon({name: 'Fuck off Finger'})
-        ]
-    }),
-    new Character({name: 'MONSTER', health: 100, isHuman: false})
-]
-
 new Vue({
     el: '#app',
     data: {
@@ -28,9 +15,18 @@ new Vue({
     methods: {
         startGame() {
             this.players = [
-                new Character({name: 'YOU', health: 100, isHuman: true}),
+                new Character({
+                    name: 'ME',
+                    health: 100,
+                    isHuman: true,
+                    weapons: [
+                        new Weapon({name: 'First Finger'}),
+                        new Weapon({name: 'Fuck off Finger'})
+                    ]
+                }),
                 new Character({name: 'MONSTER', health: 100, isHuman: false})
-            ];
+            ]
+
             this.isGameInProgress = true;
         },
         theHuman() {
@@ -55,8 +51,8 @@ new Vue({
                 .specialAttacks--;
         },
         heal() {
-            this.mutateHealth(this.theHuman(), 5, 22, true); // heal human
-            this.mutateHealth(this.theMonster(), 1, 10, false); // damage human
+            this.mutateHealth(this.theHuman(), 10, 30, true); // heal human
+            this.mutateHealth(this.theHuman(), 3, 15, false); // take damage
             this
                 .theHuman()
                 .heals--;

@@ -9,7 +9,6 @@ class Weapon {
     use() {
         // returns false if misssed, otherwise
         // a random value between min/max Damage
-
     }
 };
 
