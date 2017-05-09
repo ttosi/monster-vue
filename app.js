@@ -1,67 +1,104 @@
+import Character from './character';
+import Weapon from './weapon';
+
+const players = [
+    new Character({
+        name: 'ME',
+        health: 100,
+        isHuman: true,
+        weapons: [
+            new Weapon({name: 'First Finger'}),
+            new Weapon({name: 'Fuck off Finger'})
+        ]
+    }),
+    new Character({name: 'MONSTER', health: 100, isHuman: false})
+]
+
 new Vue({
     el: '#app',
     data: {
         playerHp: 100,
         monsterHp: 100,
+        maxSpecialAttacks: 3,
+        maxHeals: 2,
         isGameInProgress: false,
-        attackLog: []
-    },
-    computed: {
-        playerHealth() {
-            if (this.playerHp <= 0) {
-                return 0;
-            }
-            return this.playerHp;
-        },
-        monsterHealth() {
-            if (this.monsterHp <= 0) {
-                return 0;
-            }
-            return this.monsterHp;
-        }
+        attackLog: [],
+        players: []
     },
     methods: {
         startGame() {
-            this.playerHp = 100;
-            this.monsterHp = 100;
+            this.players = [
+                new Character({name: 'YOU', health: 100, isHuman: true}),
+                new Character({name: 'MONSTER', health: 100, isHuman: false})
+            ];
             this.isGameInProgress = true;
         },
+        theHuman() {
+            return this
+                .players
+                .filter(player => player.isHuman)[0];
+        },
+        theMonster() {
+            return this
+                .players
+                .filter(player => !player.isHuman)[0];
+        },
         attack() {
-            this.playerHp -= Math.floor((Math.random() * 10) + 1);
-            this.monsterHp -= Math.floor((Math.random() * 10) + 1);
-            this.checkForWin();
+            this.mutateHealth(this.theHuman(), 3, 20, false); // take damage
+            this.mutateHealth(this.theMonster(), 1, 10, false); // deal damage
         },
         specialAttack() {
-            this.playerHp -= Math.floor((Math.random() * 10) + 1);
-            this.monsterHp -= Math.floor((Math.random() * 20) + 3);
-            this.checkForWin();
+            this.mutateHealth(this.theHuman(), 2, 15, false);
+            this.mutateHealth(this.theMonster(), 5, 20, false);
+            this
+                .theHuman()
+                .specialAttacks--;
         },
         heal() {
-            this.playerHp += Math.floor((Math.random() * 8) + 1);
-            this.playerHp -= Math.floor((Math.random() * 10) + 2);
-            this.checkForWin()
+            this.mutateHealth(this.theHuman(), 5, 22, true); // heal human
+            this.mutateHealth(this.theMonster(), 1, 10, false); // damage human
+            this
+                .theHuman()
+                .heals--;
         },
-        adjustHp(player, amount) {
-            player += amount;
-        },
-        checkForWin() {
-            let message = '';
-
-            if (this.playerHp <= 0) {
-                message = 'Sorry, you lost!';
-            } else if (this.monsterHp <= 0) {
-                message = 'BAM! You won!';
-            }
-
-            if (message) {
-                this.isGameInProgress = false;
-                setTimeout(() => {
-                    alert(message);
-                }, 500)
-            }
+        mutateHealth(player, min, max, isHealing) {
+            console.log(player);
+            let points = Math.floor((Math.random() * max) + min);
+            player.health += isHealing
+                ? points
+                : (points * -1);
         },
         appendLog(damage, player) {
-            this.push()
+            this.push(``)
+        }
+    },
+    watch: {
+        players: {
+            deep: true,
+            handler() {
+                if (!this.isGameInProgress) 
+                    return;
+                
+                let message = '';
+                this
+                    .players
+                    .map((player) => {
+                        console.log(player.name, player.health);
+                        if (player.isHuman && player.currentHealth() <= 0) {
+                            message = 'You lost.';
+                        }
+                        if (!player.isHuman && player.currentHealth() <= 0) {
+                            message = 'You won!';
+                        }
+                    });
+
+                if (message) {
+                    this.isGameInProgress = false;
+                    setTimeout(() => {
+                        alert(message);
+                    }, 500)
+                }
+            }
         }
     }
 });
