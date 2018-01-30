@@ -13,23 +13,17 @@
             <div class="small-6 columns">
                 <h1 class="text-center">YOU</h1>
                 <div class="healthbar">
-                    <div 
-                        class="healthbar text-center" 
-                        style="background-color: green; margin: 0; color: white;"
-                        :style="{ width: playerHealth + '%' }">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{ width: playerHealth + '%' }">
                         <div style="padding-top: 9px;">
                             {{ playerHealth }}
                         </div>
-        <div>
+                    </div>
                 </div>
             </div>
             <div class="small-6 columns">
                 <h1 class="text-center">MONSTER</h1>
                 <div class="healthbar">
-                    <div 
-                        class="healthbar text-center"
-                        style="background-color: green; margin: 0; color: white;"
-                        :style="{ width:  monsterHealth + '%' }">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{ width:  monsterHealth + '%' }">
                         <div style="padding-top: 9px;">
                             {{ monsterHealth }}
                         </div>
@@ -45,15 +39,11 @@
         <section class="row controls" v-else>
             <div class="small-12 columns">
                 <button id="attack" @click="attack">ATTACK</button>
-                <button id="special-attack" 
-                    @click="specialAttack" 
-                    :disabled="maxSpecialAttacks === 0">
-                        SPECIAL ATTACK ({{ maxSpecialAttacks }})
+                <button id="special-attack" @click="specialAttack" :disabled="maxSpecialAttacks === 0">
+                    SPECIAL ATTACK ({{ maxSpecialAttacks }})
                 </button>
-                <button id="heal"
-                    @click="heal"
-                    :disabled="maxHeals === 0">
-                        HEAL ({{ maxHeals }})
+                <button id="heal" @click="heal" :disabled="maxHeals === 0">
+                    HEAL ({{ maxHeals }})
                 </button>
                 <button id="give-up">GIVE UP</button>
             </div>
@@ -68,7 +58,7 @@
             </div>
         </section>
     </div>
-     <script src="https://unpkg.com/vue@2.3.2"></script>
+    <script src="https://unpkg.com/vue@2.3.2"></script>
     <script src="app.js"></script>
 </body>
 
